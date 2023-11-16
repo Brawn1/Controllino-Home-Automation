@@ -191,8 +191,8 @@ PubSubClient client(ethClient);
 void(* resetFunc) (void) = 0;
 
 
-void loadeeprom(bool setdefault = false){
-  EEPROM.get(0, memory);
+void loadeeprom(int idx = 0, bool setdefault = false){
+  EEPROM.get(idx, memory);
   if(setdefault){
     memory.debug = false;
     memory.eepromversion = progversion;
@@ -201,9 +201,9 @@ void loadeeprom(bool setdefault = false){
   }
 }
 
-void saveeeprom(){
+void saveeeprom(int idx = 0){
   memory.meminit = true;
-  EEPROM.put(0, memory);
+  EEPROM.put(idx, memory);
   eepromupdate = false;
 }
 
@@ -231,6 +231,8 @@ void ShowSettings(){
   Serial.println(F("-----------Settings---------------"));
   Serial.print(F("eeprom version = "));
   Serial.println((uint8_t)memory.eepromversion);
+  Serial.print(F("size = "));
+  Serial.println(sizeof(memory));
   Serial.print(F("Program version = "));
   Serial.println(progversion);
   Serial.print(F("Debug mode = "));
@@ -582,9 +584,9 @@ void SerialEvent(){
 
 
 void setup() {  
-  loadeeprom();
+  loadeeprom(0);
   if((memory.eepromversion > 254) || (memory.eepromversion < progversion)){
-    loadeeprom(true);
+    loadeeprom(0, true);
   }
   delay(10);
   Serial.begin(115200);
@@ -912,7 +914,7 @@ void ProcessSerialEvent(uint8_t index) {
   }
   else if(strcmp(cmd, "factory") == 0){
     if(atoi(sep)>0){
-      loadeeprom(true);
+      loadeeprom(0, true);
     }
   }
   else if(strcmp(cmd, "i2caddress") == 0){
