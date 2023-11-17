@@ -216,10 +216,11 @@ void PrintHelp(){
   Serial.println(F("help,1                                                                  show this help page"));
   Serial.println(F("switch,<id>,<1=on, 2=off>                                               switch the light on or off"));
   Serial.println(F("jal,<id>,<1=up, 2=down, 3 or 0 = stop>                                  jalousie drive up or down or stop"));
-  Serial.println(F("jaltimer<id>,<time in seconds between 0 and 255>                        set time in seconds to stop the jalousie"));
-  Serial.println(F("timerlight<id>,<time in minutes between 0 and 121 (0 = deactivated)>    set specified light to automatic off light"));
+  Serial.println(F("jaltimer,<id>,<time in seconds between 0 and 255>                        set time in seconds to stop the jalousie"));
+  Serial.println(F("timerlight,<id>,<time in minutes between 0 and 121 (0 = deactivated)>    set specified light to automatic off light"));
   Serial.println();
   Serial.println(F("debug,<1=on, 0=off>                                                     show verbose informations"));
+  Serial.println(F("reboot,1                                                                reboot"));
   Serial.println(F("showsettings,1                                                          show settings"));
   Serial.println(F("factory,1                                                               reset settings to factory "));
   Serial.println(F("i2caddress,<address between 1 and 255>                                  set / change I2C Address"));
@@ -468,7 +469,7 @@ void switch_tasks(bool load_prev_state = false){
       switchlaststate[i] = false;
     }
 
-    if(lighttimers[i] && is_lighton(i) && (unsigned long)(millis() - lighttimercurrentstates[i]) >= lighttimers[i]){
+    if(lighttimers[i] && lighttimercurrentstates[i] > 0 && is_lighton(i) && (unsigned long)(millis() - lighttimercurrentstates[i]) >= lighttimers[i]){
       switch_io(lights[i], false);
       lighttimercurrentstates[i] = 0;
     }
@@ -774,122 +775,80 @@ void ProcessSerialEvent(uint8_t index) {
     }
   }
 
-  else if(strcmp(cmd, "jaltimer1") == 0){
+  else if(strcmp(cmd, "jaltimer") == 0){
+    uint8_t id = atoi(strtok(sep, ','));
+    char* tseconds = strchr(sep, ',');
+    *tseconds;
+    ++tseconds;
     if(atoi(sep) >= 0 && atoi(sep) < 255){
-      memory.jaltimer1 = (uint8_t)atoi(sep);
-      jaltimers[0] = (unsigned long)(memory.jaltimer1 * 1000UL);
+      switch(uint8_t(id)){
+        case 0:
+          memory.jaltimer1 = (uint8_t)atoi(tseconds);
+          break;
+        case 1:
+          memory.jaltimer2 = (uint8_t)atoi(tseconds);
+          break;
+        case 2:
+          memory.jaltimer3 = (uint8_t)atoi(tseconds);
+          break;
+        case 3:
+          memory.jaltimer4 = (uint8_t)atoi(tseconds);
+          break;
+        default:
+          break;
+      }
+      jaltimers[id] = (unsigned long)(((uint8_t)atoi(tseconds)) * 1000UL);
       eepromupdate = true;
     }
   }
 
-  else if(strcmp(cmd, "jaltimer2") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 255){
-      memory.jaltimer2 = (uint8_t)atoi(sep);
-      jaltimers[1] = (unsigned long)(memory.jaltimer2 * 1000UL);
-      eepromupdate = true;
-    }
-  }
-
-  else if(strcmp(cmd, "jaltimer3") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 255){
-      memory.jaltimer3 = (uint8_t)atoi(sep);
-      jaltimers[2] = (unsigned long)(memory.jaltimer3 * 1000UL);
-      eepromupdate = true;
-    }
-  }
-
-  else if(strcmp(cmd, "jaltimer4") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 255){
-      memory.jaltimer4 = (uint8_t)atoi(sep);
-      jaltimers[3] = (unsigned long)(memory.jaltimer4 * 1000UL);
-      eepromupdate = true;
-    }
-  }
-
-  else if(strcmp(cmd, "timerlight1") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight1 = uint8_t(atoi(sep));
-      lighttimers[0] = (unsigned long)(memory.timerlight1 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-
-  else if(strcmp(cmd, "timerlight2") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight2 = uint8_t(atoi(sep));
-      lighttimers[1] = (unsigned long)(memory.timerlight2 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-
-  else if(strcmp(cmd, "timerlight3") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight3 = uint8_t(atoi(sep));
-      lighttimers[2] = (unsigned long)(memory.timerlight3 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight4") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight4 = uint8_t(atoi(sep));
-      lighttimers[3] = (unsigned long)(memory.timerlight4 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight5") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight5 = uint8_t(atoi(sep));
-      lighttimers[4] = (unsigned long)(memory.timerlight5 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight6") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight6 = uint8_t(atoi(sep));
-      lighttimers[5] = (unsigned long)(memory.timerlight6 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight7") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight7 = uint8_t(atoi(sep));
-      lighttimers[6] = (unsigned long)(memory.timerlight7 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight8") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight8 = uint8_t(atoi(sep));
-      lighttimers[7] = (unsigned long)(memory.timerlight8 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight9") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight9 = uint8_t(atoi(sep));
-      lighttimers[8] = (unsigned long)(memory.timerlight9 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight10") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight10 = uint8_t(atoi(sep));
-      lighttimers[9] = (unsigned long)(memory.timerlight10 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-  else if(strcmp(cmd, "timerlight11") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight11 = uint8_t(atoi(sep));
-      lighttimers[10] = (unsigned long)(memory.timerlight11 * 60000UL);
-      eepromupdate = true;
-    }
-  }
-
-  else if(strcmp(cmd, "timerlight12") == 0){
-    if(atoi(sep) >= 0 && atoi(sep) < 121){
-      memory.timerlight12 = uint8_t(atoi(sep));
-      lighttimers[11] = (unsigned long)(memory.timerlight12 * 60000UL);
+  else if(strcmp(cmd, "timerlight") == 0){
+    uint8_t id = atoi(strtok(sep, ','));
+    char* minutest = strchr(sep, ',');
+    *minutest;
+    ++minutest;
+    if(atoi(minutest) >= 0 && atoi(minutest) < 121){
+      switch(uint8_t(atoi(id))){
+        case 0:
+          memory.timerlight1 = uint8_t(atoi(minutest));
+          break;
+        case 1:
+          memory.timerlight2 = uint8_t(atoi(minutest));
+          break;
+        case 2:
+          memory.timerlight3 = uint8_t(atoi(minutest));
+          break;
+        case 3:
+          memory.timerlight4 = uint8_t(atoi(minutest));
+          break;
+        case 4:
+          memory.timerlight5 = uint8_t(atoi(minutest));
+          break;
+        case 5:
+          memory.timerlight6 = uint8_t(atoi(minutest));
+          break;
+        case 6:
+          memory.timerlight7 = uint8_t(atoi(minutest));
+          break;
+        case 7:
+          memory.timerlight8 = uint8_t(atoi(minutest));
+          break;
+        case 8:
+          memory.timerlight9 = uint8_t(atoi(minutest));
+          break;
+        case 9:
+          memory.timerlight10 = uint8_t(atoi(minutest));
+          break;
+        case 10:
+          memory.timerlight11 = uint8_t(atoi(minutest));
+          break;
+        case 11:
+          memory.timerlight12 = uint8_t(atoi(minutest));
+          break;
+        default:
+          break;
+      }
+      lighttimers[id] = (unsigned long)((uint8_t(atoi(minutest))) * 60000UL);
       eepromupdate = true;
     }
   }
@@ -915,6 +874,11 @@ void ProcessSerialEvent(uint8_t index) {
   else if(strcmp(cmd, "factory") == 0){
     if(atoi(sep)>0){
       loadeeprom(0, true);
+    }
+  }
+  else if(strcmp(cmd, "reboot") == 0){
+    if(atoi(sep)>0){
+      resetFunc();
     }
   }
   else if(strcmp(cmd, "i2caddress") == 0){
