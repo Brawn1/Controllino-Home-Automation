@@ -45,7 +45,7 @@
 
 // Kitchen
 #define light_1 CONTROLLINO_R0 // Kitchen
-#define lswitch_1 CONTROLLINO_A12 // Kitchen
+#define lswitch_1 CONTROLLINO_A10 // Kitchen
 
 #define light_2 CONTROLLINO_D0 // Kitchen Workplace (Cooking plate)
 #define lswitch_2 0 // Kitchen Workplace (Cooking plate)
@@ -55,14 +55,14 @@
 
 // dinning table
 #define light_4 CONTROLLINO_R12 // dinning table
-#define lswitch_4 CONTROLLINO_A10 // dinning table
+#define lswitch_4 CONTROLLINO_A11 // dinning table
 
 // floor
 #define light_5 CONTROLLINO_R13 // floor
-#define lswitch_5 CONTROLLINO_A11 // floor
+#define lswitch_5 CONTROLLINO_A12 // floor
 
 #define light_6 CONTROLLINO_R14 // floor (behind)
-#define lswitch_6 CONTROLLINO_A11 // floor (behind) (A12 ??)
+#define lswitch_6 CONTROLLINO_A12 // floor (behind) (A12 ??)
 
 #define light_7 CONTROLLINO_R10 // Entry
 #define lswitch_7 CONTROLLINO_A14 // Entry
