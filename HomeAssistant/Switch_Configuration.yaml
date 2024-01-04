@@ -1,0 +1,171 @@
+# mosquitto MQTT
+mqtt:
+  - switch:
+      unique_id: mqtt_switch_0
+      name: "Switch 0"
+      state_topic: "bailey/m1/switch/state/0"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":0}'
+      payload_off: '{"state":"OFF","switch":0}'    
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_1
+      name: "Switch 1"
+      state_topic: "bailey/m1/switch/state/1"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":1}'
+      payload_off: '{"state":"OFF","switch":1}'    
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_2
+      name: "Switch 2"
+      state_topic: "bailey/m1/switch/state/2"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":2}'
+      payload_off: '{"state":"OFF","switch":2}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_3
+      name: "Switch 3"
+      state_topic: "bailey/m1/switch/state/3"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":3}'
+      payload_off: '{"state":"OFF","switch":3}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_4
+      name: "Switch 4"
+      state_topic: "bailey/m1/switch/state/4"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":4}'
+      payload_off: '{"state":"OFF","switch":4}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_5
+      name: "Switch 5"
+      state_topic: "bailey/m1/switch/state/5"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":5}'
+      payload_off: '{"state":"OFF","switch":5}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_6
+      name: "Switch 6"
+      state_topic: "bailey/m1/switch/state/6"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":6}'
+      payload_off: '{"state":"OFF","switch":6}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_7
+      name: "Switch 7"
+      state_topic: "bailey/m1/switch/state/7"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":7}'
+      payload_off: '{"state":"OFF","switch":7}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_8
+      name: "Switch 8"
+      state_topic: "bailey/m1/switch/state/8"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":8}'
+      payload_off: '{"state":"OFF","switch":8}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_9
+      name: "Switch 9"
+      state_topic: "bailey/m1/switch/state/9"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":9}'
+      payload_off: '{"state":"OFF","switch":9}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_10
+      name: "Switch 10"
+      state_topic: "bailey/m1/switch/state/10"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":10}'
+      payload_off: '{"state":"OFF","switch":10}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_11
+      name: "Switch 11"
+      state_topic: "bailey/m1/switch/state/11"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":11}'
+      payload_off: '{"state":"OFF","switch":11}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
+  - switch:
+      unique_id: mqtt_switch_12
+      name: "Switch 12"
+      state_topic: "bailey/m1/switch/state/12"
+      command_topic: "bailey/m1/switch"
+      value_template: '{{ value_json.state }}'
+      payload_on: '{"state":"ON","switch":12}'
+      payload_off: '{"state":"OFF","switch":12}'
+      state_on: "ON"
+      state_off: "OFF"
+      icon: mdi:lightbulb
+      qos: 0
+      retain: true
